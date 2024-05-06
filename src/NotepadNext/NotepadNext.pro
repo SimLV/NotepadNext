@@ -280,6 +280,8 @@ unix {
     appicon.path = $$PREFIX/share/icons/hicolor/scalable/apps/
     appicon.files = ../../icon/NotepadNext.svg
     INSTALLS += appicon
+
+    DEFINES += LUA_USE_LINUX=1
 }
 
 macx: {
@@ -288,4 +290,6 @@ macx: {
     versionAtLeast(QT_VERSION, 6.2) {
         QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
     }
+
+    DEFINES += LUA_USE_MACOSX=1
 }
