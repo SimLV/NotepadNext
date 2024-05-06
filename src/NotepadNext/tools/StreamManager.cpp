@@ -18,6 +18,8 @@
 
 #include "StreamManager.h"
 
+#include <QThread>
+
 #include "EditorManager.h"
 #include "LuaStream.h"
 #include "NotepadNextApplication.h"
@@ -39,6 +41,8 @@ ScintillaNext* StreamManager::startStream(ScintillaNext *editor, enum Type type)
 {
     qInfo(Q_FUNC_INFO);
 
+    QThread *thread = new QThread(this);
+
     switch (type) {
     case Lua:
         {
@@ -48,18 +52,20 @@ ScintillaNext* StreamManager::startStream(ScintillaNext *editor, enum Type type)
                 return nullptr;
             }
 
-            LuaStream *stream = new LuaStream(this);
+            LuaStream *stream = new LuaStream(thread);
             stream->loadBuffer(editor->getText(editor->textLength()));
+            stream->moveToThread(thread);
 
             ScintillaNext *newEditor = app->getEditorManager()->createEditor(tr("Lua(%1)").arg(uiNum++));
-            connect(stream, &LuaStream::started, stream, &LuaStream::process);
+            connect(thread, &QThread::started, stream, &LuaStream::process);
+            connect(thread, &QThread::finished, thread, &QThread::deleteLater);
             connect(stream, &LuaStream::onLineReady, newEditor, &ScintillaNext::appendBytes);
             connect(stream, &LuaStream::onError, this, [=] (const QString &error){
                     newEditor->appendError(error);
                     qWarning("Stream error: %s", error.toUtf8().constData());
                 });
 
-            stream->start();
+            thread->start();
             return newEditor;
         }
     default:

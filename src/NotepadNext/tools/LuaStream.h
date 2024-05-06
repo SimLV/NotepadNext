@@ -20,16 +20,17 @@
 #ifndef LUASTREAM_H
 #define LUASTREAM_H
 
-#include <QThread>
+#include <QObject>
 
 struct lua_State;
+class QThread;
 
-class LuaStream: public QThread
+class LuaStream : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit LuaStream(QObject *parent);
+    explicit LuaStream(QThread *parent);
 
     void loadBuffer(QByteArray const &data);
 
@@ -37,11 +38,15 @@ public slots:
     void process();
 
 signals:
-    void onLineReady(const QByteArray &newLine);
-    void onError(const QString &error);
+    void onLineReady(QByteArray newLine);
+    void onError(QString error);
+
+private:
+    static int lua_Print(lua_State *L);
 
 private:
     lua_State *L;
+    QThread *thread;
 };
 
 #endif
