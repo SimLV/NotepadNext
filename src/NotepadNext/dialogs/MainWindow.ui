@@ -316,6 +316,12 @@
     </property>
     <addaction name="actionThis_is_not_currently_implemented"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="actionLuaStream"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuSearch"/>
@@ -323,6 +329,7 @@
    <addaction name="menuEncodings"/>
    <addaction name="menuLanguage"/>
    <addaction name="menuSettings"/>
+   <addaction name="menuTools"/>
    <addaction name="menuMacro"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -1376,6 +1383,11 @@
    </property>
    <property name="text">
     <string>No Recent Sessions</string>
+   </property>
+  </action>
+  <action name="actionLuaStream">
+   <property name="text">
+    <string>&amp;Lua Stream</string>
    </property>
   </action>
  </widget>

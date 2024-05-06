@@ -143,6 +143,8 @@ private slots:
     void on_actionOpenSessionFile_triggered();
     void loadSession(const QString &filePath);
 
+    void on_actionLuaStream_triggered();
+
 private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;

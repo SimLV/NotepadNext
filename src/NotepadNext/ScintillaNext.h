@@ -103,6 +103,7 @@ public:
         New, // A temporary buffer, e.g. "New 1"
         File, // Buffer tied to a file on the file system
         FileMissing, // Buffer with a missing file on the file system
+        Stream, // A stream (i.e. pipe)
     };
 
     bool isTemporary() const { return temporary; }
@@ -115,6 +116,7 @@ public:
 
     #include "ScintillaEnums.h"
 
+    void appendError(const QString &err);
 
 public slots:
     void close();
@@ -129,6 +131,8 @@ public slots:
     void toggleCommentSelection();
     void commentLineSelection();
     void uncommentLineSelection();
+
+    void appendBytes(const QByteArray &bytes);
 
 signals:
     void aboutToSave();

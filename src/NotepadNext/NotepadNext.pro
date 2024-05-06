@@ -133,6 +133,8 @@ SOURCES += \
     decorators/HighlightedScrollBar.cpp \
     decorators/LineNumbers.cpp \
     decorators/SmartHighlighter.cpp \
+    tools/LuaStream.cpp \
+    tools/StreamManager.cpp \
     widgets/EditorInfoStatusBar.cpp \
     widgets/StatusLabel.cpp
 
@@ -211,6 +213,8 @@ HEADERS += \
     decorators/LineNumbers.h \
     decorators/SmartHighlighter.h \
     docks/SearchResultsDock.h \
+    tools/LuaStream.h \
+    tools/StreamManager.h \
     widgets/EditorInfoStatusBar.h \
     widgets/StatusLabel.h
 
@@ -239,6 +243,7 @@ RESOURCES += \
 INCLUDEPATH += $$PWD/decorators
 INCLUDEPATH += $$PWD/dialogs
 INCLUDEPATH += $$PWD/docks
+INCLUDEPATH += $$PWD/tools
 INCLUDEPATH += $$PWD/widgets
 
 
@@ -279,8 +284,8 @@ unix {
 
 macx: {
     ICON = ../../icon/NotepadNext.icns
-    
-    versionAtLeast(QT_VERSION, 6.2) { 
+
+    versionAtLeast(QT_VERSION, 6.2) {
         QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
     }
 }

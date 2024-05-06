@@ -26,6 +26,7 @@
 #include "SessionManager.h"
 #include "TranslationManager.h"
 #include "ApplicationSettings.h"
+#include "StreamManager.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -147,7 +148,10 @@ bool NotepadNextApplication::init()
 
     loadSettings();
 
-    connect(this, &NotepadNextApplication::aboutToQuit, this, &NotepadNextApplication::saveSettings);
+    connect(this, &NotepadNextApplication::aboutToQuit, this, [&]() {
+        NotepadNextApplication::saveSettings();
+        this->getStreamManager()->stopAll();
+    });
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
@@ -216,6 +220,8 @@ bool NotepadNextApplication::init()
             }
         }
     });
+
+    streamManager = new StreamManager(this);
 
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");

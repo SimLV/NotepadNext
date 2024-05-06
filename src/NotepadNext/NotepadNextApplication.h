@@ -35,6 +35,7 @@ class RecentListManager;
 class ScintillaNext;
 class SessionManager;
 class TranslationManager;
+class StreamManager;
 
 
 class NotepadNextApplication : public SingleApplication
@@ -51,6 +52,7 @@ public:
     EditorManager *getEditorManager() const { return editorManager; }
     SessionManager *getSessionManager() const;
     TranslationManager *getTranslationManager() const { return translationManager; };
+    StreamManager *getStreamManager() const { return streamManager; }
 
     LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
@@ -83,6 +85,7 @@ private:
     EditorManager *editorManager;
     RecentListManager *recentFilesListManager;
     RecentListManager *recentSessionsListManager;
+    StreamManager *streamManager;
     ApplicationSettings *settings;
     SessionManager *sessionManager;
     TranslationManager *translationManager;

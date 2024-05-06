@@ -84,6 +84,7 @@
 
 #include "FadingIndicator.h"
 
+#include "StreamManager.h"
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
@@ -2087,4 +2088,14 @@ void MainWindow::languageMenuTriggered()
     QVariant v = act->data();
 
     setLanguage(editor, v.toString());
+}
+
+void MainWindow::on_actionLuaStream_triggered()
+{
+    auto editor = currentEditor();
+    if (editor->isFile())
+    {
+        auto newEditor = app->getStreamManager()->startStream(editor, StreamManager::Type::Lua);
+        //addEditor(newEditor);
+    }
 }

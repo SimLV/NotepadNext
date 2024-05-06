@@ -27,7 +27,10 @@ static QPlainTextEdit *output = Q_NULLPTR;
 
 static void debugLogDockMessageHandler(const QString &msg)
 {
-    output->appendPlainText(msg);
+    if (output)
+    {
+        output->appendPlainText(msg);
+    }
 }
 
 DebugLogDock::DebugLogDock(QWidget *parent) :
@@ -48,5 +51,6 @@ DebugLogDock::DebugLogDock(QWidget *parent) :
 
 DebugLogDock::~DebugLogDock()
 {
+    output = nullptr;
     delete ui;
 }

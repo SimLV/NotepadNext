@@ -627,3 +627,20 @@ void ScintillaNext::setTemporary(bool temp)
     // Fake this signal
     emit savePointChanged(temporary);
 }
+
+void ScintillaNext::appendBytes(const QByteArray &bytes)
+{
+    blockSignals(true);
+    appendText(bytes.size(), bytes.constData());
+    blockSignals(false);
+}
+
+void ScintillaNext::appendError(const QString &err)
+{
+    blockSignals(true);
+    auto oldPos = length();
+    appendText(err.toUtf8().size(), err.toUtf8().constData());
+    startStyling(oldPos, 0);
+    setStyling(err.toUtf8().size(), STYLE_BRACEBAD);
+    blockSignals(false);
+}
