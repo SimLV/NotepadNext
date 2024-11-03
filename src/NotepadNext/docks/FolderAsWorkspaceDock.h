@@ -22,6 +22,7 @@
 
 #include <QDockWidget>
 #include "ApplicationSettings.h"
+#include <QModelIndex>
 
 namespace Ui {
 class FolderAsWorkspaceDock;
@@ -29,6 +30,7 @@ class FolderAsWorkspaceDock;
 
 class QFileSystemModel;
 class NotepadNextApplication;
+class MainWindow;
 
 class FolderAsWorkspaceDock : public QDockWidget
 {
@@ -37,7 +39,7 @@ class FolderAsWorkspaceDock : public QDockWidget
     USE_SESSION_SETTINGS
 
 public:
-    explicit FolderAsWorkspaceDock(NotepadNextApplication* app, QWidget *parent = nullptr);
+    explicit FolderAsWorkspaceDock(NotepadNextApplication* app, MainWindow *parent);
     ~FolderAsWorkspaceDock();
 
     void setRootPath(const QString dir);
@@ -46,10 +48,21 @@ public:
 signals:
     void fileDoubleClicked(const QString &filePath);
 
+private slots:
+    void on_actionSaveHere_triggered();
+    void on_actionNewFolder_triggered();
+    void on_actionRename_triggered();
+    void on_actionMoveToTrash_triggered();
+
+    void onCustomContextMenu(const QPoint &point);
+
 private:
     Ui::FolderAsWorkspaceDock *ui;
 
+    MainWindow *window;
     QFileSystemModel *model;
+
+    QModelIndex lastSelectedItem;
 };
 
 #endif // FOLDERASWORKSPACEDOCK_H
